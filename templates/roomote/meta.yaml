@@ -1,0 +1,56 @@
+name: Roomote
+description: >
+  Roomote is a self-hosted platform for running AI coding agents against your
+  own repositories, triggered from Slack, Microsoft Teams, or the web. This
+  template deploys the full single-host production stack described in
+  Roomote's SELF_HOSTING.md: web, API, controller, BullMQ queue worker,
+  Postgres, Redis, and MinIO artifact storage. It defaults to the Docker
+  sandbox provider, so task workers run as sibling containers on the same
+  host through a restricted Docker socket proxy (no service gets the raw
+  host socket except the proxy itself). GitHub App, Slack/Teams sign-in, and
+  the model provider key are configured afterwards from the in-app /setup
+  wizard, not at deploy time.
+instructions: >
+  1) Wait for every service to report running (the first boot also applies
+  database migrations and generates the JOB_AUTH/PREVIEW_AUTH keypairs).
+  2) Open the "SETUP_TOKEN" value from any app service's environment
+  variables panel, then visit https://<web-service-domain>/setup?token=<that
+  value> to create the founding admin account. 3) From /setup, connect
+  GitHub (manifest flow creates the GitHub App for you) and enter your model
+  provider API key. 4) Confirm the Docker worker network name matches this
+  project's actual Docker network (see this repository's README) before
+  running your first task. Full walkthrough, licensing notes (free up to 10
+  users), and troubleshooting live in the README next to this template.
+changeLog:
+  - date: 2026-08-08
+    description: first release, tracks Roomote's Coolify Docker Compose template
+links:
+  - label: Website
+    url: https://roomote.dev
+  - label: Self-Hosting Guide
+    url: https://github.com/RooCodeInc/Roomote/blob/main/SELF_HOSTING.md
+  - label: Github
+    url: https://github.com/RooCodeInc/Roomote
+schema:
+  type: object
+  required:
+    - appServiceName
+    - appServiceImage
+  properties:
+    appServiceName:
+      type: string
+      title: App Service Name
+      default: roomote
+    appServiceImage:
+      type: string
+      title: App Service Image (roomote-app)
+      default: ghcr.io/roocodeinc/roomote-app:main
+    licenseKey:
+      type: string
+      title: License Key (only needed past 10 users, see Settings -> Users -> License)
+      default: ""
+tags:
+  - AI
+  - Developer Tools
+  - Automation
+  - Self-hosted
