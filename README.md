@@ -17,8 +17,11 @@ próprio proxy).
 
 ```
 templates/roomote/
-  meta.yaml     # metadados + schema de input, no formato oficial do EasyPanel
-  index.ts      # gerador (TypeScript) no formato usado por easypanel-io/templates
+  meta.yaml           # metadados + schema de input, no formato oficial do EasyPanel
+  index.ts            # gerador (TypeScript) no formato usado por easypanel-io/templates
+  assets/
+    logo.png          # ícone oficial do Roomote (extraído do próprio repo do projeto)
+    screenshot.png    # screenshot real de produto (revisão de PR pelo bot Roomote)
 scripts/
   generate-schema.mjs  # gerador standalone (zero dependências) que produz o
                         # JSON pronto para colar no EasyPanel

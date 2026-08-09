@@ -1,36 +1,35 @@
 name: Roomote
-description: >
+description:
   Roomote is a self-hosted platform for running AI coding agents against your
-  own repositories, triggered from Slack, Microsoft Teams, or the web. This
-  template deploys the full single-host production stack described in
-  Roomote's SELF_HOSTING.md: web, API, controller, BullMQ queue worker,
-  Postgres, Redis, and MinIO artifact storage. It defaults to the Docker
-  sandbox provider, so task workers run as sibling containers on the same
-  host through a restricted Docker socket proxy (no service gets the raw
-  host socket except the proxy itself). GitHub App, Slack/Teams sign-in, and
-  the model provider key are configured afterwards from the in-app /setup
-  wizard, not at deploy time.
-instructions: >
-  1) Wait for every service to report running (the first boot also applies
-  database migrations and generates the JOB_AUTH/PREVIEW_AUTH keypairs).
-  2) Open the "SETUP_TOKEN" value from any app service's environment
-  variables panel, then visit https://<web-service-domain>/setup?token=<that
-  value> to create the founding admin account. 3) From /setup, connect
-  GitHub (manifest flow creates the GitHub App for you) and enter your model
-  provider API key. 4) Confirm the Docker worker network name matches this
-  project's actual Docker network (see this repository's README) before
-  running your first task. Full walkthrough, licensing notes (free up to 10
-  users), and troubleshooting live in the README next to this template.
+  own repositories, triggered from Slack, Microsoft Teams, or the web. Assign
+  it a task and it clones your repo, writes the code, opens or updates a pull
+  request, and keeps working through review comments and CI failures until the
+  task is done. This template deploys the full single-host production stack
+  documented in Roomote's SELF_HOSTING.md guide -- web app, API, task
+  controller, BullMQ queue worker, Postgres, Redis, and MinIO artifact storage
+  -- with the Docker sandbox provider, so tasks run as sibling containers on
+  the same host through a restricted Docker socket proxy. A deployment is free
+  for up to 10 users. GitHub App, sign-in provider, and model provider key are
+  all configured afterwards from Roomote's own in-app /setup wizard, not at
+  deploy time.
+instructions:
+  Once every service is running, copy the SETUP_TOKEN value from any app
+  service's environment variables and open
+  https://<web-service-domain>/setup?token=<SETUP_TOKEN> to create the
+  founding admin account and connect GitHub.
 changeLog:
   - date: 2026-08-08
     description: first release, tracks Roomote's Coolify Docker Compose template
 links:
   - label: Website
     url: https://roomote.dev
-  - label: Self-Hosting Guide
+  - label: Documentation
     url: https://github.com/RooCodeInc/Roomote/blob/main/SELF_HOSTING.md
   - label: Github
     url: https://github.com/RooCodeInc/Roomote
+contributors:
+  - name: mvsilvapadtec
+    url: https://github.com/mvsilvapadtec
 schema:
   type: object
   required:
@@ -49,6 +48,53 @@ schema:
       type: string
       title: License Key (only needed past 10 users, see Settings -> Users -> License)
       default: ""
+benefits:
+  - title: Delegate real coding work
+    description:
+      Assign Roomote a bug fix, a feature, or a PR review comment from Slack,
+      Microsoft Teams, or the web, and it clones the repo, makes the change,
+      and opens or updates a pull request on its own.
+  - title: Keeps your code on your infrastructure
+    description:
+      This template runs the entire stack -- app, database, queue, and
+      artifact storage -- on your own server, with task sandboxes executing as
+      containers on the same host.
+  - title: Free for small teams
+    description:
+      A Roomote deployment is free for up to 10 registered users; larger teams
+      can add a license key from Roomote Cloud without changing the
+      deployment.
+  - title: Works with your existing model provider
+    description:
+      Bring your own API key for OpenRouter, Anthropic, OpenAI, and other
+      models.dev-compatible providers -- entered once in the setup wizard, not
+      hardcoded into the deployment.
+features:
+  - title: Slack and Microsoft Teams integration
+    description:
+      Mention Roomote in Slack or Teams to start or resume a task without
+      leaving the conversation.
+  - title: GitHub App automation
+    description:
+      Roomote creates its own GitHub App through GitHub's manifest flow,
+      clones repositories, opens branches, and manages pull requests.
+  - title: Live task previews
+    description:
+      Open a running task's terminal, logs, and (optionally) a live preview of
+      the app it is working on, right from the task page.
+  - title: Pluggable sandboxes
+    description:
+      Defaults to Docker sandboxes on the same host; swap to Modal, E2B,
+      Daytona, or Azure Container Apps for hosted task execution without a
+      Docker socket.
+  - title: Declarative environments
+    description:
+      Define repositories, services, and commands for a project as YAML and
+      let Roomote provision the environment automatically on startup.
+  - title: Encrypted backups
+    description:
+      Roomote's own CLI produces an encrypted, passphrase-protected backup
+      bundle covering the database, configuration, and artifacts.
 tags:
   - AI
   - Developer Tools
