@@ -1,0 +1,3 @@
+# Output of scripts/generate-schema.mjs — contains freshly generated
+# passwords, ENCRYPTION_KEY, SETUP_TOKEN, etc. Never commit this.
+*.easypanel.json

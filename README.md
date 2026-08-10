@@ -19,6 +19,9 @@ próprio proxy).
 templates/roomote/
   meta.yaml           # metadados + schema de input, no formato oficial do EasyPanel
   index.ts            # gerador (TypeScript) no formato usado por easypanel-io/templates
+  example-output.json # exemplo do JSON gerado, com segredos substituídos por
+                       # placeholders — só para inspecionar o formato, não use
+                       # para deploy (ver aviso abaixo)
   assets/
     logo.png          # ícone oficial do Roomote (extraído do próprio repo do projeto)
     screenshot.png    # screenshot real de produto (revisão de PR pelo bot Roomote)
@@ -73,7 +76,16 @@ Flags opcionais:
 | `--license-key`   | (vazio)                                    | Chave de licença, só necessária acima de 10 usuários      |
 
 **Importante**: cada execução gera senhas e chaves aleatórias novas. Não
-faça commit do JSON gerado — trate-o como um arquivo de segredos.
+faça commit do JSON gerado — trate-o como um arquivo de segredos (o
+`.gitignore` deste repo já ignora `*.easypanel.json` por isso). Um
+`ENCRYPTION_KEY`/`SETUP_TOKEN`/senha conhecidos publicamente por qualquer
+pessoa que já tenha visto este repositório deixariam de proteger qualquer
+coisa no dia em que alguém colasse esse JSON específico no EasyPanel sem
+regenerar. Para só olhar o formato do JSON sem gerar nada, veja
+[`templates/roomote/example-output.json`](templates/roomote/example-output.json)
+— é o mesmo output, mas com os segredos trocados por
+`REPLACE_WITH_RANDOM_VALUE`; ele é seguro de deixar público porque não é
+utilizável como está.
 
 Para travar a imagem em uma versão imutável em vez do canal `main` (mutável),
 use `--image ghcr.io/roocodeinc/roomote-app:v<versão>` ou

@@ -1,0 +1,145 @@
+{
+  "services": [
+    {
+      "type": "app",
+      "data": {
+        "serviceName": "roomote-web",
+        "source": {
+          "type": "image",
+          "image": "ghcr.io/roocodeinc/roomote-app:main"
+        },
+        "deploy": {
+          "command": "web"
+        },
+        "env": "R_APP_ENV=production\nROOMOTE_DOCKER_LOAD_ENV_FILE=false\nR_AUTO_GENERATE_KEYS=true\nENCRYPTION_KEY=REPLACE_WITH_RANDOM_VALUE\nR_DISCORD_GATEWAY_SECRET=REPLACE_WITH_RANDOM_VALUE\nARTIFACT_SIGNING_KEY=REPLACE_WITH_RANDOM_VALUE\nDASHBOARD_PASSWORD=REPLACE_WITH_RANDOM_VALUE\nSETUP_TOKEN=REPLACE_WITH_RANDOM_VALUE\nR_LICENSE_KEY=\nS3_ACCESS_KEY_ID=roomote\nS3_SECRET_ACCESS_KEY=REPLACE_WITH_RANDOM_VALUE\nS3_REGION=us-east-1\nS3_BUCKET_ARTIFACTS=roomote-artifacts\nS3_AUTO_CREATE_BUCKET=true\nS3_ENDPOINT=http://$(PROJECT_NAME)_roomote-minio:9000\nS3_PRESIGN_ENDPOINT=https://$(PROJECT_NAME)-roomote-minio.$(EASYPANEL_HOST)\nDEFAULT_COMPUTE_PROVIDER=docker\nDATABASE_URL=postgres://postgres:REPLACE_WITH_RANDOM_VALUE@$(PROJECT_NAME)_roomote-db:5432/$(PROJECT_NAME)\nREDIS_URL=redis://default:REPLACE_WITH_RANDOM_VALUE@$(PROJECT_NAME)_roomote-redis:6379\nR_APP_URL=https://$(PROJECT_NAME)-roomote-web.$(EASYPANEL_HOST)\nR_PUBLIC_URL=https://$(PROJECT_NAME)-roomote-web.$(EASYPANEL_HOST)\nTRPC_URL=https://$(PROJECT_NAME)-roomote-api.$(EASYPANEL_HOST)\nPORT=3000",
+        "domains": [
+          {
+            "host": "$(EASYPANEL_DOMAIN)",
+            "port": 3000
+          }
+        ]
+      }
+    },
+    {
+      "type": "app",
+      "data": {
+        "serviceName": "roomote-api",
+        "source": {
+          "type": "image",
+          "image": "ghcr.io/roocodeinc/roomote-app:main"
+        },
+        "deploy": {
+          "command": "api"
+        },
+        "env": "R_APP_ENV=production\nROOMOTE_DOCKER_LOAD_ENV_FILE=false\nR_AUTO_GENERATE_KEYS=true\nENCRYPTION_KEY=REPLACE_WITH_RANDOM_VALUE\nR_DISCORD_GATEWAY_SECRET=REPLACE_WITH_RANDOM_VALUE\nARTIFACT_SIGNING_KEY=REPLACE_WITH_RANDOM_VALUE\nDASHBOARD_PASSWORD=REPLACE_WITH_RANDOM_VALUE\nSETUP_TOKEN=REPLACE_WITH_RANDOM_VALUE\nR_LICENSE_KEY=\nS3_ACCESS_KEY_ID=roomote\nS3_SECRET_ACCESS_KEY=REPLACE_WITH_RANDOM_VALUE\nS3_REGION=us-east-1\nS3_BUCKET_ARTIFACTS=roomote-artifacts\nS3_AUTO_CREATE_BUCKET=true\nS3_ENDPOINT=http://$(PROJECT_NAME)_roomote-minio:9000\nS3_PRESIGN_ENDPOINT=https://$(PROJECT_NAME)-roomote-minio.$(EASYPANEL_HOST)\nDEFAULT_COMPUTE_PROVIDER=docker\nDATABASE_URL=postgres://postgres:REPLACE_WITH_RANDOM_VALUE@$(PROJECT_NAME)_roomote-db:5432/$(PROJECT_NAME)\nREDIS_URL=redis://default:REPLACE_WITH_RANDOM_VALUE@$(PROJECT_NAME)_roomote-redis:6379\nR_APP_URL=https://$(PROJECT_NAME)-roomote-web.$(EASYPANEL_HOST)\nR_PUBLIC_URL=https://$(PROJECT_NAME)-roomote-web.$(EASYPANEL_HOST)\nTRPC_URL=https://$(PROJECT_NAME)-roomote-api.$(EASYPANEL_HOST)\nPORT=3001",
+        "domains": [
+          {
+            "host": "$(EASYPANEL_DOMAIN)",
+            "port": 3001
+          }
+        ]
+      }
+    },
+    {
+      "type": "app",
+      "data": {
+        "serviceName": "roomote-controller",
+        "source": {
+          "type": "image",
+          "image": "ghcr.io/roocodeinc/roomote-app:main"
+        },
+        "deploy": {
+          "command": "controller"
+        },
+        "env": "R_APP_ENV=production\nROOMOTE_DOCKER_LOAD_ENV_FILE=false\nR_AUTO_GENERATE_KEYS=true\nENCRYPTION_KEY=REPLACE_WITH_RANDOM_VALUE\nR_DISCORD_GATEWAY_SECRET=REPLACE_WITH_RANDOM_VALUE\nARTIFACT_SIGNING_KEY=REPLACE_WITH_RANDOM_VALUE\nDASHBOARD_PASSWORD=REPLACE_WITH_RANDOM_VALUE\nSETUP_TOKEN=REPLACE_WITH_RANDOM_VALUE\nR_LICENSE_KEY=\nS3_ACCESS_KEY_ID=roomote\nS3_SECRET_ACCESS_KEY=REPLACE_WITH_RANDOM_VALUE\nS3_REGION=us-east-1\nS3_BUCKET_ARTIFACTS=roomote-artifacts\nS3_AUTO_CREATE_BUCKET=true\nS3_ENDPOINT=http://$(PROJECT_NAME)_roomote-minio:9000\nS3_PRESIGN_ENDPOINT=https://$(PROJECT_NAME)-roomote-minio.$(EASYPANEL_HOST)\nDEFAULT_COMPUTE_PROVIDER=docker\nDATABASE_URL=postgres://postgres:REPLACE_WITH_RANDOM_VALUE@$(PROJECT_NAME)_roomote-db:5432/$(PROJECT_NAME)\nREDIS_URL=redis://default:REPLACE_WITH_RANDOM_VALUE@$(PROJECT_NAME)_roomote-redis:6379\nR_APP_URL=https://$(PROJECT_NAME)-roomote-web.$(EASYPANEL_HOST)\nR_PUBLIC_URL=https://$(PROJECT_NAME)-roomote-web.$(EASYPANEL_HOST)\nTRPC_URL=https://$(PROJECT_NAME)-roomote-api.$(EASYPANEL_HOST)\nDOCKER_HOST=tcp://$(PROJECT_NAME)_roomote-docker-proxy:2375\nDOCKER_WORKER_RELEASE_PATH=/roomote/releases/worker-current.tar.gz\nDOCKER_WORKER_NETWORK=$(PROJECT_NAME)\nDOCKER_WORKER_ALLOW_UNBOUNDED_DISK=false"
+      }
+    },
+    {
+      "type": "app",
+      "data": {
+        "serviceName": "roomote-bullmq",
+        "source": {
+          "type": "image",
+          "image": "ghcr.io/roocodeinc/roomote-app:main"
+        },
+        "deploy": {
+          "command": "bullmq"
+        },
+        "env": "R_APP_ENV=production\nROOMOTE_DOCKER_LOAD_ENV_FILE=false\nR_AUTO_GENERATE_KEYS=true\nENCRYPTION_KEY=REPLACE_WITH_RANDOM_VALUE\nR_DISCORD_GATEWAY_SECRET=REPLACE_WITH_RANDOM_VALUE\nARTIFACT_SIGNING_KEY=REPLACE_WITH_RANDOM_VALUE\nDASHBOARD_PASSWORD=REPLACE_WITH_RANDOM_VALUE\nSETUP_TOKEN=REPLACE_WITH_RANDOM_VALUE\nR_LICENSE_KEY=\nS3_ACCESS_KEY_ID=roomote\nS3_SECRET_ACCESS_KEY=REPLACE_WITH_RANDOM_VALUE\nS3_REGION=us-east-1\nS3_BUCKET_ARTIFACTS=roomote-artifacts\nS3_AUTO_CREATE_BUCKET=true\nS3_ENDPOINT=http://$(PROJECT_NAME)_roomote-minio:9000\nS3_PRESIGN_ENDPOINT=https://$(PROJECT_NAME)-roomote-minio.$(EASYPANEL_HOST)\nDEFAULT_COMPUTE_PROVIDER=docker\nDATABASE_URL=postgres://postgres:REPLACE_WITH_RANDOM_VALUE@$(PROJECT_NAME)_roomote-db:5432/$(PROJECT_NAME)\nREDIS_URL=redis://default:REPLACE_WITH_RANDOM_VALUE@$(PROJECT_NAME)_roomote-redis:6379\nR_APP_URL=https://$(PROJECT_NAME)-roomote-web.$(EASYPANEL_HOST)\nR_PUBLIC_URL=https://$(PROJECT_NAME)-roomote-web.$(EASYPANEL_HOST)\nTRPC_URL=https://$(PROJECT_NAME)-roomote-api.$(EASYPANEL_HOST)\nPORT=3002\nDOCKER_HOST=tcp://$(PROJECT_NAME)_roomote-docker-proxy:2375\nDOCKER_WORKER_RELEASE_PATH=/roomote/releases/worker-current.tar.gz"
+      }
+    },
+    {
+      "type": "app",
+      "data": {
+        "serviceName": "roomote-migrate",
+        "source": {
+          "type": "image",
+          "image": "ghcr.io/roocodeinc/roomote-app:main"
+        },
+        "deploy": {
+          "command": "db-migrate"
+        },
+        "env": "R_APP_ENV=production\nROOMOTE_DOCKER_LOAD_ENV_FILE=false\nR_AUTO_GENERATE_KEYS=true\nENCRYPTION_KEY=REPLACE_WITH_RANDOM_VALUE\nR_DISCORD_GATEWAY_SECRET=REPLACE_WITH_RANDOM_VALUE\nARTIFACT_SIGNING_KEY=REPLACE_WITH_RANDOM_VALUE\nDASHBOARD_PASSWORD=REPLACE_WITH_RANDOM_VALUE\nSETUP_TOKEN=REPLACE_WITH_RANDOM_VALUE\nR_LICENSE_KEY=\nS3_ACCESS_KEY_ID=roomote\nS3_SECRET_ACCESS_KEY=REPLACE_WITH_RANDOM_VALUE\nS3_REGION=us-east-1\nS3_BUCKET_ARTIFACTS=roomote-artifacts\nS3_AUTO_CREATE_BUCKET=true\nS3_ENDPOINT=http://$(PROJECT_NAME)_roomote-minio:9000\nS3_PRESIGN_ENDPOINT=https://$(PROJECT_NAME)-roomote-minio.$(EASYPANEL_HOST)\nDEFAULT_COMPUTE_PROVIDER=docker\nDATABASE_URL=postgres://postgres:REPLACE_WITH_RANDOM_VALUE@$(PROJECT_NAME)_roomote-db:5432/$(PROJECT_NAME)\nREDIS_URL=redis://default:REPLACE_WITH_RANDOM_VALUE@$(PROJECT_NAME)_roomote-redis:6379\nR_APP_URL=https://$(PROJECT_NAME)-roomote-web.$(EASYPANEL_HOST)\nR_PUBLIC_URL=https://$(PROJECT_NAME)-roomote-web.$(EASYPANEL_HOST)\nTRPC_URL=https://$(PROJECT_NAME)-roomote-api.$(EASYPANEL_HOST)"
+      }
+    },
+    {
+      "type": "app",
+      "data": {
+        "serviceName": "roomote-minio",
+        "source": {
+          "type": "image",
+          "image": "minio/minio:RELEASE.2025-09-07T16-13-09Z"
+        },
+        "deploy": {
+          "command": "server /data --console-address :9001"
+        },
+        "env": "MINIO_ROOT_USER=roomote\nMINIO_ROOT_PASSWORD=REPLACE_WITH_RANDOM_VALUE",
+        "domains": [
+          {
+            "host": "$(EASYPANEL_DOMAIN)",
+            "port": 9000
+          }
+        ],
+        "mounts": [
+          {
+            "type": "volume",
+            "name": "data",
+            "mountPath": "/data"
+          }
+        ]
+      }
+    },
+    {
+      "type": "app",
+      "data": {
+        "serviceName": "roomote-docker-proxy",
+        "source": {
+          "type": "image",
+          "image": "ghcr.io/tecnativa/docker-socket-proxy:v0.4.2"
+        },
+        "env": "CONTAINERS=1\nALLOW_START=1\nEXEC=1\nIMAGES=1\nNETWORKS=1\nVOLUMES=1\nPOST=1\nEVENTS=0",
+        "mounts": [
+          {
+            "type": "bind",
+            "hostPath": "/var/run/docker.sock",
+            "mountPath": "/var/run/docker.sock"
+          }
+        ]
+      }
+    },
+    {
+      "type": "postgres",
+      "data": {
+        "serviceName": "roomote-db",
+        "password": "REPLACE_WITH_RANDOM_VALUE"
+      }
+    },
+    {
+      "type": "redis",
+      "data": {
+        "serviceName": "roomote-redis",
+        "password": "REPLACE_WITH_RANDOM_VALUE"
+      }
+    }
+  ]
+}
